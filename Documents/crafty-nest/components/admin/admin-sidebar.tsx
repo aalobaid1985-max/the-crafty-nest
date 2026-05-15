@@ -17,32 +17,43 @@ export function AdminSidebar() {
   const path = usePathname()
 
   return (
-    <aside className="w-52 bg-white border-l border-gray-100 flex flex-col min-h-screen sticky top-0">
-      <div className="p-5 border-b border-gray-100">
-        <p className="font-bold text-rose-500 text-lg">The Crafty Nest</p>
-        <p className="text-xs text-gray-400 mt-0.5">لوحة الإدارة</p>
+    <aside
+      className="w-52 flex flex-col min-h-screen sticky top-0"
+      style={{ background: 'var(--surface)', borderLeft: '1px solid var(--line)' }}
+    >
+      <div className="p-5" style={{ borderBottom: '1px solid var(--line)' }}>
+        <p style={{ fontFamily: 'var(--font-display)', fontSize: '20px', color: 'var(--accent)', lineHeight: 1 }}>
+          The Crafty Nest
+        </p>
+        <p className="text-xs mt-1" style={{ color: 'var(--muted)' }}>لوحة الإدارة</p>
       </div>
+
       <nav className="flex flex-col gap-1 p-3 flex-1">
-        {NAV.map(({ href, label, icon: Icon }) => (
-          <Link
-            key={href}
-            href={href}
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-              path.startsWith(href)
-                ? 'bg-rose-50 text-rose-600'
-                : 'text-gray-600 hover:bg-gray-50'
-            }`}
-          >
-            <Icon className="w-4 h-4" />
-            {label}
-          </Link>
-        ))}
+        {NAV.map(({ href, label, icon: Icon }) => {
+          const active = path.startsWith(href)
+          return (
+            <Link
+              key={href}
+              href={href}
+              className="flex items-center gap-3 px-3 py-2.5 rounded text-sm font-medium transition-colors"
+              style={{
+                background: active ? 'color-mix(in oklab, var(--accent) 10%, transparent)' : 'transparent',
+                color: active ? 'var(--accent)' : 'var(--ink)',
+                opacity: active ? 1 : 0.75,
+              }}
+            >
+              <Icon className="w-4 h-4 flex-shrink-0" />
+              {label}
+            </Link>
+          )
+        })}
       </nav>
-      <div className="p-4 border-t border-gray-100 flex flex-col gap-2">
-        <Link href="/" className="text-xs text-gray-400 hover:text-gray-600">
+
+      <div className="p-4 flex flex-col gap-2" style={{ borderTop: '1px solid var(--line)' }}>
+        <Link href="/" className="text-xs transition-colors" style={{ color: 'var(--muted)' }}>
           ← العودة للمتجر
         </Link>
-        <LogoutButton className="text-xs text-gray-400 hover:text-red-500 text-right" />
+        <LogoutButton className="text-xs text-right transition-colors" style={{ color: 'var(--muted)' } as React.CSSProperties} />
       </div>
     </aside>
   )

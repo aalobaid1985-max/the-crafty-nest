@@ -1,20 +1,32 @@
 'use client'
 
 import Link from 'next/link'
-import { ShoppingBag } from 'lucide-react'
 import { useCartStore } from '@/lib/stores/cart-store'
 
 export function CartIcon() {
   const totalItems = useCartStore(s => s.totalItems())
 
   return (
-    <Link href="/cart" className="relative text-gray-600 hover:text-gray-900">
-      <ShoppingBag className="w-5 h-5" />
-      {totalItems > 0 && (
-        <span className="absolute -top-2 -left-2 bg-rose-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center font-bold">
-          {totalItems}
-        </span>
-      )}
+    <Link
+      href="/cart"
+      className="inline-flex items-center gap-2.5 rounded-full px-4 py-1.5 transition-opacity hover:opacity-90"
+      style={{
+        border: '1px solid var(--ink)',
+        background: 'var(--ink)',
+        color: 'var(--surface)',
+        fontSize: '13px',
+      }}
+    >
+      السلة
+      <span
+        className="inline-flex items-center justify-center rounded-full min-w-[22px] h-[22px] px-1.5 text-[11.5px] font-mono tabular-nums transition-transform"
+        style={{
+          background: totalItems > 0 ? 'var(--accent)' : 'color-mix(in oklab, var(--surface) 20%, transparent)',
+          color: 'var(--surface)',
+        }}
+      >
+        {totalItems}
+      </span>
     </Link>
   )
 }
